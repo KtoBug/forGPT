@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TSZHApp2</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/lib/fontawesome/css/all.min.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="header-fixed">
+        <div class="header-content">
+            <div class="header-text">
+                <h1>ТСЖ Победы 16</h1>
+            </div>
+        </div>
+    </header>
+
+    <aside class="fixed-sidebar">
+        <div class="sidebar-text">
+            <h1>ТСН</h1>
+        </div>
+        <div class="sidebar-logo">
+            <img src="~/images/logo_Pobedy16.png" alt="Логотип" class="img-fluid" />
+        </div>
+        <nav class="sidebar-nav">
+            <a class="btn btn-custom w-100 text-start" href="/Home/Index">
+                <i class="fas fa-home"></i> Главная
+            </a>
+            <button class="btn btn-custom w-100 text-start" data-role="chairman-login">
+            <i class="fas fa-user-shield"></i> Председатель
+             </button>
+            <a class="btn btn-custom w-100 text-start" href="/Home/Documentation">
+                <i class="fas fa-file-alt"></i> Документация
+            </a>
+            <a class="btn btn-custom w-100 text-start" href="/Home/Rules">
+                <i class="fas fa-book"></i> Правила сайта
+            </a>
+            <a class="btn btn-custom w-100 text-start" target="_blank" href="https://t.me/+gxEb5NV6EwhhMzYx">
+                <i class="fab fa-telegram"></i> Наша группа
+            </a>
+        </nav>
+    </aside>
+
+    <main class="content-with-sidebar">
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer>
+        <hr />
+        <div class="footer-text">
+            Разработка: MYTUKA | Почта: tszh@info.ru | Тел: +7-927-808-80-80 | Адрес: г.Сызрань ул. Победы д. 16
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="~/js/admin-panel.js"></script>
+    
+</body>
+</html>

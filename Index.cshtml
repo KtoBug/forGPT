@@ -1,0 +1,55 @@
+﻿@model IEnumerable<TSZHApp2.Models.News>
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container text-center">
+    <h1>НОВОСТИ</h1>
+</div>
+<div class="news-feed">
+    @if (Model != null && Model.Any())
+    {
+        foreach (var news in Model.OrderByDescending(n => n.CreatedAt))
+        {
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@news.Title</h5>
+                    <p class="card-text">@Html.Raw(news.Text)</p>
+                    @if (!string.IsNullOrEmpty(news.ImagePath))
+                    {
+                        <img src="@news.ImagePath" class="img-fluid mt-2" alt="Изображение новости" />
+                    }
+                    <p class="card-text">
+                        <small class="text-muted">Опубликовано @news.CreatedAt.ToLocalTime().ToString("g")</small>
+                    </p>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p>Пока нет новостей.</p>
+    }
+</div>
+
+<!-- Панель добавления новости -->
+<div id="admin-panel" class="container mt-4" style="display:none;">
+    <h3>Добавить новость</h3>
+    <form asp-controller="News" asp-action="AddNews" method="post" enctype="multipart/form-data">
+        <div class="form-group mb-3">
+            <input type="text" name="title" class="form-control" placeholder="Заголовок" required />
+        </div>
+        <div class="form-group mb-3">
+            <textarea name="text" class="form-control" rows="5" placeholder="Текст"></textarea>
+        </div>
+        <div class="form-group mb-3">
+            <input type="file" name="image" class="form-control-file" />
+        </div>
+        <button type="submit" class="btn btn-custom">Добавить</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin-panel.js"></script>
+}

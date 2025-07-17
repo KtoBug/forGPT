@@ -1,0 +1,181 @@
+
+/* site.css – полностью адаптированная версия с фиксами */
+:root {
+    --primary-font: 'Old Standard TT', 'Times New Roman', serif;
+    --secondary-font: 'URW Bookman Semi-Bold', sans-serif;
+    --header-height: 15vh;
+    --sidebar-width: 16.66667%;
+    --content-width: 83.33333%;
+    --text-color: #040101;
+    --sidebar-text-color: #fff;
+    --footer-text-color: #eeeb16d1;
+    --button-bg: #ffffff;
+    --button-hover-bg: #3608db;
+    --gray-overlay: rgba(128, 128, 128, 0.5);
+    --gray-hover-overlay: rgba(128, 128, 128, 0.7);
+    --font-size-base: 14px;
+    --font-size-lg: 16px;
+    --spacing-large: 60px;
+}
+@media (min-width: 768px) {
+    :root {
+        --font-size-base: 16px;
+        --font-size-lg: 18px;
+    }
+}
+html, body {
+    font-size: var(--font-size-base);
+    margin: 0;
+    padding: 0;
+    font-family: var(--secondary-font);
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+.header-fixed {
+    position: fixed;
+    top: 0;
+    left: var(--sidebar-width);
+    width: var(--content-width);
+    z-index: 1000;
+    background-image: url('/images/Syzran_header.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: var(--header-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.header-content {
+    width: 100%;
+    text-align: center;
+}
+.header-text h1 {
+    font-size: clamp(32px, 6vw, 100px);
+    color: var(--text-color);
+    font-family: var(--primary-font);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin: 0;
+}
+.fixed-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    padding: 20px;
+    z-index: 999;
+    background-image: url('/images/Kremlin_side-bar.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-large);
+    overflow-y: auto;
+    padding-bottom: 40px;
+}
+.sidebar-text {
+    text-align: center;
+    margin-bottom: 20px;
+}
+.sidebar-text h1 {
+    font-family: var(--primary-font);
+    font-size: clamp(24px, 6vw, 60px);
+    color: var(--sidebar-text-color);
+    text-shadow: 1px 1px 2px rgba(235, 247, 248, 0.986);
+    white-space: nowrap;
+}
+.sidebar-logo img {
+    max-height: 200px;
+    margin-bottom: 30px;
+}
+.btn-custom {
+    font-family: var(--primary-font);
+    background-color: var(--button-bg);
+    color: var(--sidebar-text-color);
+    border: none;
+    padding: 10px 15px;
+    font-size: var(--font-size-lg);
+    position: relative;
+    z-index: 1;
+}
+.btn-custom::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background-color: var(--gray-overlay);
+    border-radius: 10px;
+    z-index: -1;
+}
+.btn-custom:hover {
+    background-color: var(--button-hover-bg);
+    color: var(--sidebar-text-color);
+}
+.btn-custom:hover::before {
+    background-color: var(--gray-hover-overlay);
+}
+.sidebar-nav .btn {
+    margin-bottom: 20px;
+}
+main.content-with-sidebar {
+    flex: 1 0 auto;
+    margin-top: var(--header-height);
+    margin-left: var(--sidebar-width);
+    padding: 20px;
+    background-image: url('/images/background-title.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: top center;
+    background-repeat: no-repeat;
+    min-height: calc(100vh - var(--header-height) - 10vh);
+    box-sizing: border-box;
+}
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.container > h1,
+.rules-title,
+.documentation-title {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: var(--text-color);
+    font-family: var(--primary-font);
+}
+.rules-image {
+    margin-top: 20px;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+footer {
+    flex-shrink: 0;
+    width: var(--content-width);
+    margin-left: var(--sidebar-width);
+    background-image: url('/images/Syzran_footer.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    color: var(--footer-text-color);
+    font-family: var(--primary-font);
+    font-size: clamp(16px, 2vw, 24px);
+    padding-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    box-sizing: border-box;
+}

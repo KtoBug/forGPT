@@ -1,0 +1,91 @@
+@model List<TSZHApp2.Models.Document>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Документация";
+}
+
+@functions {
+    public string GetFileIconClass(string? fileName)
+    {
+        if (string.IsNullOrEmpty(fileName))
+            return "fas fa-file text-dark";
+
+        var ext = System.IO.Path.GetExtension(fileName).ToLower();
+        return ext switch
+        {
+            ".pdf" => "fas fa-file-pdf text-danger",
+            ".doc" or ".docx" => "fas fa-file-word text-primary",
+            ".xls" or ".xlsx" => "fas fa-file-excel text-success",
+            ".ppt" or ".pptx" => "fas fa-file-powerpoint text-warning",
+            ".txt" => "fas fa-file-alt text-muted",
+            ".zip" or ".rar" => "fas fa-file-archive text-secondary",
+            _ => "fas fa-file text-dark"
+        };
+    }
+}
+
+<div class="col-md-10 content-with-sidebar">
+    @if (TempData["UploadSuccess"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["UploadSuccess"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть"></button>
+        </div>
+    }
+
+    <div class="container">
+        <h1 class="documentation-title">Документация</h1>
+    </div>
+    <div class="row">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var doc in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title d-flex align-items-center">
+                                <i class="@GetFileIconClass(doc.FileName) me-2"></i>
+                                <a href="@doc.FilePath" target="_blank">@doc.FileName</a>
+                            </h5>
+                            <p class="card-text text-muted">
+                                Загружено: @doc.UploadedAt.ToLocalTime().ToString("g")
+                            </p>
+                            <form id="deleteForm-@doc.Id" asp-controller="Document" asp-action="Delete" method="post" style="display:none;">
+                                <input type="hidden" name="id" value="@doc.Id" />
+                            </form>
+                            <button type="submit" form="deleteForm-@doc.Id"
+                                    class="btn btn-sm btn-danger delete-button"
+                                    style="display:none;">
+                                Удалить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <p>Нет доступных документов.</p>
+            </div>
+        }
+    </div>
+</div>
+
+<div id="admin-panel" class="container mt-4" style="display:none;">
+    <h3>Загрузить документ</h3>
+    <form asp-controller="Document" asp-action="Upload" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <input type="text" name="fileName" class="form-control" placeholder="Название файла (отображаемое)" />
+        </div>
+        <div class="form-group">
+            <input type="file" name="file" class="form-control-file" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Загрузить</button>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="~/js/admin-panel.js"></script>
+}
